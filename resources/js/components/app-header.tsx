@@ -11,7 +11,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
+import { List, LayoutGrid, Menu, Search } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -20,6 +20,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: '/dashboard',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Produtos',
+        href: '/products',
+        icon: List,
     },
 ];
 
@@ -80,14 +85,14 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                             href={item.href}
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
-                                                page.url === item.href && activeItemStyles,
+                                                page.url.startsWith(item.href) && activeItemStyles,
                                                 'h-9 cursor-pointer px-3',
                                             )}
                                         >
                                             {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
                                             {item.title}
                                         </Link>
-                                        {page.url === item.href && (
+                                        {page.url.startsWith(item.href) && (
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                         )}
                                     </NavigationMenuItem>
