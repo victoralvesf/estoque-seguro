@@ -14,7 +14,15 @@ export default function Products({ products }: ProductsProps) {
         <AppLayout>
             <Head title="Produtos" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <Button>
+                            <Link href={route('products.create')} className="size-full">
+                                Adicionar Produto
+                            </Link>
+                        </Button>
+                    </div>
+
                     <div className="flex gap-2 items-center">
                         <Button size="icon" variant="secondary" disabled={!products.prev_page_url}>
                             <Link href={products.prev_page_url!} className="size-full flex items-center justify-center">
