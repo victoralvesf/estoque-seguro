@@ -453,11 +453,11 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       >
         <div
           className={cn(
-            'min-h-10 rounded-md border border-input text-base outline-none transition-[color,box-shadow] md:text-sm',
+            'min-h-9 rounded-md border border-input text-base outline-none transition-[color,box-shadow] md:text-sm',
             'focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]',
             'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
             {
-              'px-3 py-2': selected.length !== 0,
+              'px-3 py-1': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
               'cursor-default': blocksInputIfMaxItemsSelected
             },
@@ -468,7 +468,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             inputRef?.current?.focus();
           }}
         >
-          <div className="relative w-full flex flex-wrap gap-1">
+          <div className="relative w-full h-full flex items-center flex-wrap gap-1">
             {selected.map((option) => {
               return (
                 <Badge
@@ -526,7 +526,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
               }}
               placeholder={hidePlaceholderWhenSelected && selected.length !== 0 ? '' : placeholder}
               className={cn(
-                'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
+                'flex-1 max-h-9 bg-transparent outline-none placeholder:text-muted-foreground',
                 {
                   'w-full': hidePlaceholderWhenSelected,
                   'px-3 py-2': selected.length === 0,

@@ -45,9 +45,13 @@ export default function Products() {
             <Head title="Cadastrar Produto" />
 
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 mt-6">
+                <div className="mb-4">
+                    <h2 className="font-medium text-xl">Adicionar Produto</h2>
+                </div>
+
                 <form className="flex flex-col gap-6" onSubmit={submit}>
                     <div className="grid gap-6">
-                        <div className="grid gap-4 grid-cols-2">
+                        <div className="grid gap-4 lg:grid-cols-2">
                             <div className="grid gap-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="name">Nome</Label>
@@ -63,7 +67,7 @@ export default function Products() {
                                     <InputError message={errors.name} />
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid lg:grid-cols-2 gap-4">
                                     <div className="grid gap-2">
                                         <Label htmlFor="price">Preço</Label>
                                         <div className="relative">
@@ -103,7 +107,7 @@ export default function Products() {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid lg:grid-cols-2 gap-4">
                                     <div className="grid gap-2">
                                         <Label htmlFor="category">Categoria</Label>
                                         <MultipleSelector
@@ -147,7 +151,7 @@ export default function Products() {
                                         required
                                         tabIndex={1}
                                         value={data.description}
-                                        className="w-full h-full min-h-full max-h-full resize-none"
+                                        className="w-full min-h-32 max-h-44 lg:h-full lg:min-h-full lg:max-h-full resize-none"
                                         onChange={(e) => setData('description', e.target.value)}
                                         placeholder="Adicione mais detalhes do produto..."
                                     />
@@ -156,14 +160,14 @@ export default function Products() {
                             </div>
                         </div>
 
-                        <div className="w-full flex items-start justify-end mt-4 gap-2">
-                            <Button type="button" variant="secondary" className="p-0">
-                                <Link href={route('products')} className="size-full px-4 py-2">Voltar</Link>
-                            </Button>
-
-                            <Button type="submit" tabIndex={4} disabled={processing} className="cursor-pointer">
+                        <div className="w-full flex flex-col lg:flex-row-reverse items-start lg:justify-start mt-4 gap-2">
+                            <Button type="submit" tabIndex={4} disabled={processing} className="cursor-pointer w-full lg:w-fit">
                                 {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                 Cadastrar
+                            </Button>
+
+                            <Button type="button" variant="secondary" className="p-0 w-full lg:w-fit">
+                                <Link href={route('products')} className="size-full px-4 py-2">Voltar</Link>
                             </Button>
                         </div>
                     </div>
