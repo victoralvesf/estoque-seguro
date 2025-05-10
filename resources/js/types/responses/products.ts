@@ -1,7 +1,6 @@
-import { PaginatedResponse } from "./paginated"
+import { BaseModel, PaginatedResponse } from "./paginated"
 
-export interface Product {
-    id: number
+export interface Product extends BaseModel {
     name: string
     description: string
     quantity: number
@@ -9,8 +8,6 @@ export interface Product {
     currency_code: string
     category: string
     sku: string
-    created_at: string
-    updated_at: string
 }
 
 export type ProductsResponse = PaginatedResponse<Product>

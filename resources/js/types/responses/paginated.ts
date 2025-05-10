@@ -19,3 +19,9 @@ interface Link {
   label: string
   active: boolean
 }
+
+export interface BaseModel {
+    id: number
+    created_at: string
+    updated_at: string
+}

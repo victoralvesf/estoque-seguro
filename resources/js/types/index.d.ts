@@ -1,8 +1,15 @@
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 
+type Permission = 'viewAny' | 'view' | 'create' | 'update' | 'delete' | 'restore' | 'forceDelete'
+
+interface Permissions {
+    user: Record<Permission, boolean>
+}
+
 export interface Auth {
     user: User;
+    permissions: Permissions
 }
 
 export interface BreadcrumbItem {
@@ -16,6 +23,7 @@ export interface NavGroup {
 }
 
 export interface NavItem {
+    id: string
     title: string;
     href: string;
     icon?: LucideIcon | null;
