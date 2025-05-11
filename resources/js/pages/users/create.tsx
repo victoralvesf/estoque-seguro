@@ -71,7 +71,7 @@ export default function CreateUser() {
                                                 required
                                                 tabIndex={1}
                                                 autoComplete="email"
-                                                placeholder="email@exemplo.com"
+                                                placeholder="email@dominio.com"
                                                 disabled={processing}
                                                 value={data.email}
                                                 onChange={(e) => setData('email', e.target.value)}
