@@ -23,11 +23,11 @@ export default function Products({ products }: ProductsProps) {
                 <div className="grid grid-cols-2">
                     <div className="mr-auto">
                         {canCreateProducts && (
-                            <Button>
-                                <Link href={route('products.create')} className="size-full">
+                            <Link href={route('products.create')}>
+                                <Button className="cursor-pointer">
                                     Adicionar Produto
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         )}
                     </div>
 
