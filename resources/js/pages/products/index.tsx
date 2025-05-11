@@ -1,3 +1,4 @@
+import { AddButton } from "@/components/add-button";
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -23,11 +24,9 @@ export default function Products({ products }: ProductsProps) {
                 <div className="grid grid-cols-2">
                     <div className="mr-auto">
                         {canCreateProducts && (
-                            <Link href={route('products.create')}>
-                                <Button className="cursor-pointer">
-                                    Adicionar Produto
-                                </Button>
-                            </Link>
+                            <AddButton routeName="products.create">
+                                Adicionar Produto
+                            </AddButton>
                         )}
                     </div>
 
