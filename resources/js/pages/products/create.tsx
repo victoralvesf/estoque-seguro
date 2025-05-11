@@ -11,6 +11,7 @@ import { LoaderCircle } from "lucide-react";
 import { FormEventHandler, useState } from "react";
 import { formatNumeral, NumeralThousandGroupStyles } from 'cleave-zen'
 import { SharedData } from "@/types";
+import { ContentLayout } from "@/layouts/content-layout";
 
 const OPTIONS: Option[] = [
   { label: 'Dummy', value: 'dummy' },
@@ -75,7 +76,7 @@ export default function Products() {
         <AppLayout>
             <Head title="Cadastrar Produto" />
 
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <ContentLayout>
                 <div className="my-4">
                     <h2 className="font-medium text-xl">Adicionar Produto</h2>
                 </div>
@@ -203,7 +204,7 @@ export default function Products() {
                         </div>
                     </div>
                 </form>
-            </div>
+            </ContentLayout>
         </AppLayout>
     )
 }

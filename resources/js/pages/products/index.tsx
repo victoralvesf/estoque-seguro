@@ -3,6 +3,7 @@ import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
+import { ContentLayout } from "@/layouts/content-layout";
 import { ProductsResponse } from "@/types/responses/products";
 import { Head, Link } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -20,7 +21,7 @@ export default function Products({ products }: ProductsProps) {
     return (
         <AppLayout>
             <Head title="Produtos" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <ContentLayout>
                 <div className="grid grid-cols-2">
                     <div className="mr-auto">
                         {canCreateProducts && (
@@ -58,7 +59,7 @@ export default function Products({ products }: ProductsProps) {
                         </div>
                     ))}
                 </div>
-            </div>
+            </ContentLayout>
         </AppLayout>
     )
 }

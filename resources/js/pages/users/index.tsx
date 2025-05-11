@@ -1,6 +1,7 @@
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
+import { ContentLayout } from "@/layouts/content-layout";
 import { UsersResponse } from "@/types/responses/users";
 import { Head, Link } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,7 +14,7 @@ export default function Users({ users }: UsersProps) {
     return (
         <AppLayout>
             <Head title="Produtos" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <ContentLayout>
                 <div className="flex items-center justify-end">
                     <div className="flex gap-2 items-center">
                         <Button size="icon" variant="secondary" disabled={!users.prev_page_url}>
@@ -42,7 +43,7 @@ export default function Users({ users }: UsersProps) {
                         </div>
                     ))}
                 </div>
-            </div>
+            </ContentLayout>
         </AppLayout>
     )
 }
