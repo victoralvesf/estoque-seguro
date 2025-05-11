@@ -1,9 +1,16 @@
 import { BaseModel, PaginatedResponse } from "./paginated"
 
-export interface User extends BaseModel {
+export interface User {
     name: string
     email: string
     role: string
 }
 
-export type UsersResponse = PaginatedResponse<User>
+export interface UserForm extends User {
+    password: string
+    password_confirmation: string
+}
+
+export type UserResponse = User & BaseModel
+
+export type UsersResponse = PaginatedResponse<UserResponse>

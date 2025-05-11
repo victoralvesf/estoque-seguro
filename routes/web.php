@@ -31,6 +31,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('users', [UserController::class, 'index'])
         ->name('users')
         ->can('viewAny', User::class);
+
+    Route::get('users/create', [UserController::class, 'create'])
+        ->name('users.create')
+        ->can('create', User::class);
+
+    Route::post('users', [UserController::class, 'store'])
+        ->can('create', User::class);
 });
 
 require __DIR__ . '/settings.php';

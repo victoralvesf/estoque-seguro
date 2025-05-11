@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -27,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('users/create');
     }
 
     /**
@@ -35,7 +37,16 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        User::create([
+            'name' => $validated->name,
+            'email' => $validated->email,
+            'role' => $validated->role,
+            'password' => Hash::make($validated->password),
+        ]);
+
+        return Redirect::route('users')->with('success', 'Usuário criado com sucesso!');
     }
 
     /**

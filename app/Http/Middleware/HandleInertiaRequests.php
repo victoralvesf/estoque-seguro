@@ -46,6 +46,7 @@ class HandleInertiaRequests extends Middleware
                 'permissions' => [
                     'user' => [
                         'viewAny' => $request->user()?->can('viewAny', User::class),
+                        'create' => $request->user()?->can('create', User::class),
                     ],
                     'product' => [
                         'create' => $request->user()?->can('create', Product::class),
