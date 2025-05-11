@@ -12,6 +12,7 @@ import { FormEventHandler, useState } from "react";
 import { formatNumeral, NumeralThousandGroupStyles } from 'cleave-zen'
 import { SharedData } from "@/types";
 import { ContentLayout } from "@/layouts/content-layout";
+import { FormTitle } from "@/components/form-title";
 
 const OPTIONS: Option[] = [
   { label: 'Dummy', value: 'dummy' },
@@ -74,12 +75,10 @@ export default function Products() {
 
     return (
         <AppLayout>
-            <Head title="Cadastrar Produto" />
+            <Head title="Adicionar Produto" />
 
             <ContentLayout>
-                <div className="my-4">
-                    <h2 className="font-medium text-xl">Adicionar Produto</h2>
-                </div>
+                <FormTitle>Adicionar Produto</FormTitle>
 
                 <form className="flex flex-col gap-6" onSubmit={submit}>
                     <div className="grid gap-6">
