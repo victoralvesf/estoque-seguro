@@ -7,6 +7,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuT
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
+import { usePermissions } from '@/hooks/use-permissions';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -47,7 +48,10 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
 
     const navItems = mainNavItems.filter((item) => {
         if (item.id === 'users') {
-            return auth.permissions.user.viewAny
+            return usePermissions({
+                model: 'user',
+                action: 'viewAny'
+            })
         }
         return true
     })

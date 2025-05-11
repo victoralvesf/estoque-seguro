@@ -1,5 +1,6 @@
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
+import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ProductsResponse } from "@/types/responses/products";
 import { Head, Link } from "@inertiajs/react";
@@ -10,20 +11,27 @@ interface ProductsProps {
 }
 
 export default function Products({ products }: ProductsProps) {
+    const canCreateProducts = usePermissions({
+        model: 'product',
+        action: 'create',
+    })
+
     return (
         <AppLayout>
             <Head title="Produtos" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <Button>
-                            <Link href={route('products.create')} className="size-full">
-                                Adicionar Produto
-                            </Link>
-                        </Button>
+                <div className="grid grid-cols-2">
+                    <div className="mr-auto">
+                        {canCreateProducts && (
+                            <Button>
+                                <Link href={route('products.create')} className="size-full">
+                                    Adicionar Produto
+                                </Link>
+                            </Button>
+                        )}
                     </div>
 
-                    <div className="flex gap-2 items-center">
+                    <div className="ml-auto flex gap-2 items-center">
                         <Button size="icon" variant="secondary" disabled={!products.prev_page_url}>
                             <Link href={products.prev_page_url!} className="size-full flex items-center justify-center">
                                 <Icon iconNode={ChevronLeft} />

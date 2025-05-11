@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,9 +21,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('products');
 
     Route::get('products/create', [ProductController::class, 'create'])
-        ->name('products.create');
+        ->name('products.create')
+        ->can('create', Product::class);
 
-    Route::post('products', [ProductController::class, 'store']);
+    Route::post('products', [ProductController::class, 'store'])
+        ->can('create', Product::class);
 
     // Users
     Route::get('users', [UserController::class, 'index'])

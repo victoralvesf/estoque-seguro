@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -45,6 +46,9 @@ class HandleInertiaRequests extends Middleware
                 'permissions' => [
                     'user' => [
                         'viewAny' => $request->user()?->can('viewAny', User::class),
+                    ],
+                    'product' => [
+                        'create' => $request->user()?->can('create', Product::class),
                     ]
                 ]
             ],
