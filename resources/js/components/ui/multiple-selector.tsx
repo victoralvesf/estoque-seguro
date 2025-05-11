@@ -467,6 +467,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             if (disabled || blocksInputIfMaxItemsSelected) return;
             inputRef?.current?.focus();
           }}
+          tabIndex={-1}
         >
           <div className="relative w-full h-full flex items-center flex-wrap gap-1">
             {selected.map((option) => {
@@ -478,6 +479,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                     'data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground',
                     badgeClassName,
                   )}
+                  tabIndex={-1}
                   data-fixed={option.fixed}
                   data-disabled={disabled || undefined}
                 >
@@ -498,6 +500,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                       e.stopPropagation();
                     }}
                     onClick={() => handleUnselect(option)}
+                    tabIndex={-1}
                   >
                     <X className="h-3 w-3 text-muted-foreground hover:text-primary-foreground" />
                   </button>
@@ -524,6 +527,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                 setOpen(true);
                 inputProps?.onFocus?.(event);
               }}
+              tabIndex={1}
               placeholder={hidePlaceholderWhenSelected && selected.length !== 0 ? '' : placeholder}
               className={cn(
                 'flex-1 max-h-9 bg-transparent outline-none placeholder:text-muted-foreground',

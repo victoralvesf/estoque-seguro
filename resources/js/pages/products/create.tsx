@@ -6,9 +6,11 @@ import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 import { Textarea } from "@/components/ui/textarea";
 import AppLayout from "@/layouts/app-layout";
 import { Product } from "@/types/responses/products";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
 import { LoaderCircle } from "lucide-react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
+import { formatNumeral, NumeralThousandGroupStyles } from 'cleave-zen'
+import { SharedData } from "@/types";
 
 const OPTIONS: Option[] = [
   { label: 'Dummy', value: 'dummy' },
@@ -21,7 +23,9 @@ const CURRENCIES = {
 }
 
 export default function Products() {
-    const { data, setData, post, processing, errors, setDefaults } = useForm<Required<Product>>({
+    const { errors } = usePage<SharedData>().props;
+    const [processing, setProcessing] = useState(false)
+    const { data, setData } = useForm<Required<Product>>({
         name: '',
         description: '',
         category: '',
@@ -33,19 +37,46 @@ export default function Products() {
 
     const currencyCode = CURRENCIES[data.currency_code as keyof typeof CURRENCIES]
 
+    const maskPrice = (value: string) => {
+        return formatNumeral(value, {
+            delimiter: '.',
+            numeralDecimalMark: ',',
+            numeralThousandsGroupStyle: NumeralThousandGroupStyles.THOUSAND,
+            numeralDecimalScale: 2,
+            stripLeadingZeroes: true,
+            numeralPositiveOnly: true,
+        })
+    }
+
+    const unmaskPrice = (value: string) => {
+        if (!value) return '0.00'
+
+        if (!value.includes(',')) value += ',0'
+        if (value.split(',')[1].length === 1) value += '0'
+
+        return value.replaceAll('.', '').replace(',', '.')
+    }
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('products'), {
-            onFinish: () => setDefaults(),
-        });
+
+        const payload = {
+            ...data,
+            price: unmaskPrice(data.price),
+        };
+
+        router.post(route('products'), payload, {
+            onStart: () => setProcessing(true),
+            onFinish: () => setProcessing(false),
+        })
     };
 
     return (
         <AppLayout>
             <Head title="Cadastrar Produto" />
 
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 mt-6">
-                <div className="mb-4">
+            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+                <div className="my-4">
                     <h2 className="font-medium text-xl">Adicionar Produto</h2>
                 </div>
 
@@ -76,7 +107,7 @@ export default function Products() {
                                                 type="text"
                                                 required
                                                 tabIndex={1}
-                                                value={data.price}
+                                                value={maskPrice(data.price)}
                                                 onChange={(e) => setData('price', e.target.value)}
                                                 placeholder="0.00"
                                                 className="peer ps-8 pe-12"
@@ -99,7 +130,7 @@ export default function Products() {
                                             required
                                             tabIndex={1}
                                             min={1}
-                                            max={999}
+                                            max={10000}
                                             value={data.quantity}
                                             onChange={(e) => setData('quantity', parseInt(e.target.value))}
                                         />
@@ -161,12 +192,12 @@ export default function Products() {
                         </div>
 
                         <div className="w-full flex flex-col lg:flex-row-reverse items-start lg:justify-start mt-4 gap-2">
-                            <Button type="submit" tabIndex={4} disabled={processing} className="cursor-pointer w-full lg:w-fit">
+                            <Button type="submit" tabIndex={1} disabled={processing} className="cursor-pointer w-full lg:w-fit">
                                 {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                 Cadastrar
                             </Button>
 
-                            <Button type="button" variant="secondary" className="p-0 w-full lg:w-fit">
+                            <Button type="button" tabIndex={1} variant="secondary" className="p-0 w-full lg:w-fit">
                                 <Link href={route('products')} className="size-full px-4 py-2">Voltar</Link>
                             </Button>
                         </div>
