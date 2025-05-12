@@ -1,9 +1,10 @@
+import { Role } from "@/types"
 import { BaseModel, PaginatedResponse } from "./paginated"
 
 export interface User {
     name: string
     email: string
-    role: string
+    role: Role
 }
 
 export interface UserForm extends User {

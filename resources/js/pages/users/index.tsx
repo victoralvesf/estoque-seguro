@@ -1,6 +1,8 @@
+import { userColumns } from "@/columns/user";
 import { AddButton } from "@/components/add-button";
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
@@ -53,13 +55,10 @@ export default function Users({ users }: UsersProps) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    {users.data.map((user) => (
-                        <div key={user.id} className="p-4 border border-border rounded-md">
-                            <h3>{user.name}</h3>
-                            <p>{user.email}</p>
-                            <p>{user.role}</p>
-                        </div>
-                    ))}
+                    <DataTable
+                        columns={userColumns}
+                        data={users.data}
+                    />
                 </div>
             </ContentLayout>
         </AppLayout>
