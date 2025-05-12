@@ -11,17 +11,11 @@ import { usePermissions } from '@/hooks/use-permissions';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { ListIcon, LayoutGridIcon, Menu, Search, UsersIcon } from 'lucide-react';
+import { ListIcon, Menu, Search, UsersIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
 const mainNavItems: NavItem[] = [
-    {
-        id: 'dashboard',
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGridIcon,
-    },
     {
         id: 'products',
         title: 'Produtos',
@@ -91,7 +85,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                         </Sheet>
                     </div>
 
-                    <Link href="/dashboard" prefetch className="flex items-center space-x-2">
+                    <Link href="/products" prefetch className="flex items-center space-x-2">
                         <AppLogo />
                     </Link>
 
@@ -122,11 +116,6 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     </div>
 
                     <div className="ml-auto flex items-center space-x-2">
-                        <div className="relative flex items-center space-x-1">
-                            <Button variant="ghost" size="icon" className="group h-9 w-9 cursor-pointer">
-                                <Search className="!size-5 opacity-80 group-hover:opacity-100" />
-                            </Button>
-                        </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="size-10 rounded-full p-1">
