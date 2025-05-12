@@ -7,6 +7,7 @@ import { PriceFilter } from "./price";
 import { SearchFilter } from "./search";
 import { FilterContainer } from "./styles";
 import { QuantityFilter } from "./quantity";
+import { OrderAndSortFilters } from "./order-sort";
 
 export function ProductFilters() {
     const { categories, filters } = usePage<SharedData>().props
@@ -75,6 +76,13 @@ export function ProductFilters() {
             <PriceFilter handleSetPriceFilter={setPriceFilters} />
 
             <QuantityFilter handleSetQuantityFilter={setQuantityFilters} />
+
+            <OrderAndSortFilters
+                currentOrderValue={localFilters.order_by ?? 'name'}
+                onSetOrderValue={(order) => updateFilters('order_by', order)}
+                currentSortValue={localFilters.sort ?? 'asc'}
+                onSetSortValue={(sort) => updateFilters('sort', sort)}
+            />
 
             <Button
                 variant="secondary"
