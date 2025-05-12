@@ -26,6 +26,9 @@ class ProductController extends Controller
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
 
+        $minQuantity = Product::min('quantity');
+        $maxQuantity = Product::max('quantity');
+
         return Inertia::render('products/index', [
             'products' => $products,
             'categories' => $categories,
@@ -33,6 +36,10 @@ class ProductController extends Controller
             'priceRange' => [
                 'min' => $minPrice,
                 'max' => $maxPrice,
+            ],
+            'quantityRange' => [
+                'min' => $minQuantity,
+                'max' => $maxQuantity,
             ],
         ]);
     }

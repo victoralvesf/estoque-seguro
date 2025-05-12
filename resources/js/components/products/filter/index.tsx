@@ -6,6 +6,7 @@ import { CategoryFilter } from "./category";
 import { PriceFilter } from "./price";
 import { SearchFilter } from "./search";
 import { FilterContainer } from "./styles";
+import { QuantityFilter } from "./quantity";
 
 export function ProductFilters() {
     const { categories, filters } = usePage<SharedData>().props
@@ -46,6 +47,14 @@ export function ProductFilters() {
         }))
     }, [setLocalFilters])
 
+    const setQuantityFilters = useCallback((min: number, max: number) => {
+        setLocalFilters((prev) => ({
+            ...prev,
+            'min_quantity': min.toString(),
+            'max_quantity': max.toString(),
+        }))
+    }, [setLocalFilters])
+
     const areFiltersEmpty = Object.keys(localFilters).length === 0
 
     return (
@@ -64,6 +73,8 @@ export function ProductFilters() {
             />
 
             <PriceFilter handleSetPriceFilter={setPriceFilters} />
+
+            <QuantityFilter handleSetQuantityFilter={setQuantityFilters} />
 
             <Button
                 variant="secondary"

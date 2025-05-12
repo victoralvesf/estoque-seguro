@@ -49,7 +49,7 @@ export interface ProductFilters {
   per_page?: string
 }
 
-interface PriceRange {
+interface Range {
     min: number
     max: number
 }
@@ -61,7 +61,8 @@ export interface SharedData {
     sidebarOpen: boolean;
     categories: SharedCategory[]
     filters: ProductFilters
-    priceRange: PriceRange;
+    priceRange: Range;
+    quantityRange: Range;
     [key: string]: unknown;
 }
 
