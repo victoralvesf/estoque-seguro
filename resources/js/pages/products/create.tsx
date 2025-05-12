@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 import { Textarea } from "@/components/ui/textarea";
 import AppLayout from "@/layouts/app-layout";
-import { Product } from "@/types/responses/products";
+import { ProductForm } from "@/types/responses/products";
 import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
 import { LoaderCircle } from "lucide-react";
 import { FormEventHandler, useState } from "react";
@@ -14,10 +14,6 @@ import { SharedData } from "@/types";
 import { ContentLayout } from "@/layouts/content-layout";
 import { FormTitle } from "@/components/form-title";
 
-const OPTIONS: Option[] = [
-  { label: 'Dummy', value: 'dummy' },
-];
-
 const CURRENCIES = {
     BRL: 'R$',
     EUR: '€',
@@ -25,9 +21,9 @@ const CURRENCIES = {
 }
 
 export default function Products() {
-    const { errors } = usePage<SharedData>().props;
+    const { errors, categories } = usePage<SharedData>().props;
     const [processing, setProcessing] = useState(false)
-    const { data, setData } = useForm<Required<Product>>({
+    const { data, setData } = useForm<Required<ProductForm>>({
         name: '',
         description: '',
         category: '',
@@ -36,6 +32,11 @@ export default function Products() {
         currency_code: 'BRL',
         sku: ''
     });
+
+    const categoryOptions: Option[] = categories.map((category) => ({
+        label: category.name,
+        value: category.slug,
+    }))
 
     const currencyCode = CURRENCIES[data.currency_code as keyof typeof CURRENCIES]
 
@@ -149,9 +150,9 @@ export default function Products() {
                                             createText="Criar nova categoria"
                                             placeholder="Selecione ou Crie uma nova"
                                             className="min-h-9 max-h-9"
-                                            defaultOptions={OPTIONS}
+                                            defaultOptions={categoryOptions}
                                             maxSelected={1}
-                                            onChange={([option]) => setData('category', option?.value ?? '')}
+                                            onChange={([option]) => setData('category', option?.label ?? '')}
                                             emptyIndicator={
                                                 <p className="text-left px-4">Nenhuma categoria encontrada!</p>
                                             }

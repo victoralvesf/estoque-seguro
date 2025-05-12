@@ -16,7 +16,14 @@ class Product extends Model
         'quantity',
         'price',
         'currency_code',
-        'category',
+        'category_id',
         'sku'
     ];
+
+    protected $with = ['category'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

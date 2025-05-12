@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\StoreProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -25,7 +26,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('products/create');
+        return Inertia::render('products/create', [
+            'categories' => Category::orderBy('name')->select('id', 'name', 'slug')->get(),
+        ]);
     }
 
     /**
@@ -34,6 +37,17 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validated = $request->validated();
+
+        $categoryName = $validated['category'];
+        $categorySlug = str($categoryName)->slug();
+
+        $category = Category::firstOrCreate(
+            ['name' => $categoryName],
+            ['slug' => $categorySlug]
+        );
+
+        $validated['category_id'] = $category->id;
+        unset($validated['category']);
 
         Product::create($validated);
 

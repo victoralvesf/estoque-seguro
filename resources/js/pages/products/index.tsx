@@ -53,7 +53,7 @@ export default function Products({ products }: ProductsProps) {
                     {products.data.map((product) => (
                         <div key={product.id} className="p-4 border border-border rounded-md">
                             <h3>{product.name}</h3>
-                            <p>{product.category}</p>
+                            <p>{product.category.name}</p>
                             <p>{product.price}</p>
                             <p>{product.quantity}</p>
                         </div>

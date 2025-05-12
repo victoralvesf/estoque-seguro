@@ -31,11 +31,18 @@ export interface NavItem {
     isActive?: boolean;
 }
 
+export interface SharedCategory {
+    id: number
+    name: string
+    slug: string
+}
+
 export interface SharedData {
     name: string;
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
+    categories: SharedCategory[]
     [key: string]: unknown;
 }
 
