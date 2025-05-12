@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ProductFilters as ProductFiltersType, SharedData } from "@/types";
 import { CategoryFilter } from "./category";
 import { PriceFilter } from "./price";
+import { SearchFilter } from "./search";
 import { FilterContainer } from "./styles";
 
 export function ProductFilters() {
@@ -45,8 +46,15 @@ export function ProductFilters() {
         }))
     }, [setLocalFilters])
 
+    const areFiltersEmpty = Object.keys(localFilters).length === 0
+
     return (
         <FilterContainer className="col-span-2">
+            <SearchFilter
+                defaultValue={localFilters.name}
+                handleSearchFilter={(value) => updateFilters('name', value)}
+            />
+
             <CategoryFilter
                 currentValue={localFilters.category_id ?? ''}
                 categories={categories}
@@ -60,6 +68,7 @@ export function ProductFilters() {
             <Button
                 variant="secondary"
                 onClick={() => setLocalFilters({})}
+                disabled={areFiltersEmpty}
             >
                 Limpar Filtros
             </Button>
