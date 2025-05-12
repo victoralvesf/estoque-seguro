@@ -1,6 +1,7 @@
 import { productColumns } from "@/columns/product";
 import { AddButton } from "@/components/add-button";
 import { Icon } from "@/components/icon";
+import { ProductFilters } from "@/components/products/filter";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -51,11 +52,17 @@ export default function Products({ products }: ProductsProps) {
                         </Button>
                     </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                    <DataTable
-                        columns={productColumns}
-                        data={products.data}
-                    />
+                <div className="grid grid-cols-10 gap-2">
+                    <div className="col-span-2">
+                        <ProductFilters />
+                    </div>
+
+                    <div className="col-span-8">
+                        <DataTable
+                            columns={productColumns}
+                            data={products.data}
+                        />
+                    </div>
                 </div>
             </ContentLayout>
         </AppLayout>

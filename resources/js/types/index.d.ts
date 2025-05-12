@@ -37,12 +37,25 @@ export interface SharedCategory {
     slug: string
 }
 
+export interface ProductFilters {
+  name?: string
+  category_id?: string
+  min_price?: string
+  max_price?: string
+  min_quantity?: string
+  max_quantity?: string
+  order_by?: string
+  sort?: string
+  per_page?: string
+}
+
 export interface SharedData {
     name: string;
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
     categories: SharedCategory[]
+    filters: ProductFilters
     [key: string]: unknown;
 }
 

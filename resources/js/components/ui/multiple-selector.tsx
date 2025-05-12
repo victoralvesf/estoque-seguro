@@ -453,7 +453,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       >
         <div
           className={cn(
-            'min-h-9 rounded-md border border-input text-base outline-none transition-[color,box-shadow] md:text-sm',
+            'min-h-9 flex items-center rounded-md border border-input text-base outline-none transition-[color,box-shadow] md:text-sm',
             'focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]',
             'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
             {
@@ -477,13 +477,16 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                   className={cn(
                     'data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground',
                     'data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground',
+                    'max-w-full overflow-hidden truncate',
                     badgeClassName,
                   )}
                   tabIndex={-1}
                   data-fixed={option.fixed}
                   data-disabled={disabled || undefined}
                 >
-                  {option.label}
+                  <div className='flex items-center flex-wrap truncate text-wrap'>
+                    {option.label}
+                  </div>
                   <button
                     type="button"
                     className={cn(
