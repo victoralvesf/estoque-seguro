@@ -1,7 +1,8 @@
+import { ColumnDef } from "@tanstack/react-table"
 import { ProductTableActions } from "@/components/products/actions-button"
 import { Badge } from "@/components/ui/badge"
 import { ProductResponse } from "@/types/responses/products"
-import { ColumnDef } from "@tanstack/react-table"
+import { formatPrice } from "@/utils/price"
 
 export const productColumns: ColumnDef<ProductResponse>[] = [
     {
@@ -24,10 +25,7 @@ export const productColumns: ColumnDef<ProductResponse>[] = [
         header: 'Preço',
         cell: ({ row }) => {
             const price = parseFloat(row.original.price)
-            const formatted = new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: row.original.currency_code
-            }).format(price)
+            const formatted = formatPrice(price)
 
             return formatted
         }

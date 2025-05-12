@@ -3,6 +3,7 @@ import { FilterCard, FilterCardTitle, PriceLabel } from "./styles";
 import { useEffect, useState } from "react";
 import { usePage } from "@inertiajs/react";
 import { SharedData } from "@/types";
+import { formatPrice } from "@/utils/price";
 
 interface PriceFilterProps {
     handleSetPriceFilter: (min: number, max: number) => void
@@ -13,15 +14,8 @@ export function PriceFilter({ handleSetPriceFilter }: PriceFilterProps) {
     const prices = [priceRange.min, priceRange.max]
     const [localPrices, setLocalPrices] = useState(prices)
 
-    const minPrice = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(localPrices[0])
-
-    const maxPrice = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(localPrices[1])
+    const minPrice = formatPrice(localPrices[0])
+    const maxPrice = formatPrice(localPrices[1])
 
     useEffect(() => {
         if (!filters.min_price && !filters.max_price) {
