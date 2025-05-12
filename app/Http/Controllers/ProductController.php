@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ProductFilter;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Product;
@@ -14,10 +15,16 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $productFilter = new ProductFilter($request);
+        $allowedSearchParams = $productFilter->getAllowedSearchParams();
+
+        $products = $productFilter->filter()->paginate()->getResults();
+
         return Inertia::render('products/index', [
-            'products' => Product::orderBy('name')->paginate(20)->withQueryString(),
+            'products' => $products,
+            'filters' => $request->only($allowedSearchParams),
         ]);
     }
 
