@@ -14,6 +14,9 @@ import { SharedData } from "@/types"
 export function ProductTableActions() {
     const { auth } = usePage<SharedData>().props
 
+    const userIsCommom = auth.user.role === 'user'
+    if (userIsCommom) return null
+
     const userIsAdmin = auth.user.role === 'admin'
     const userIsOperator = auth.user.role === 'operator'
 
@@ -31,13 +34,12 @@ export function ProductTableActions() {
                         Ações
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {userIsOperator && (
-                        <DropdownMenuItem>Atualizar Estoque</DropdownMenuItem>
-                    )}
-                    {userIsAdmin && (
+                    {(userIsAdmin || userIsOperator) && (
                         <DropdownMenuItem>Editar</DropdownMenuItem>
                     )}
-                    <DropdownMenuItem>Excluir</DropdownMenuItem>
+                    {userIsAdmin && (
+                        <DropdownMenuItem>Excluir</DropdownMenuItem>
+                    )}
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
