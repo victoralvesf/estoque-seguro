@@ -43,12 +43,6 @@ export const productColumns: ColumnDef<ProductResponse>[] = [
     {
         id: 'actions',
         header: '',
-        cell: ({ row }) => {
-            return (
-                <div className="flex justify-end">
-                    <ProductTableActions />
-                </div>
-            )
-        }
+        cell: ({ row }) => <ProductTableActions />,
     }
 ]
