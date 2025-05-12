@@ -59,7 +59,7 @@ export function ProductFilters() {
     const areFiltersEmpty = Object.keys(localFilters).length === 0
 
     return (
-        <FilterContainer className="col-span-2">
+        <FilterContainer>
             <SearchFilter
                 defaultValue={localFilters.name}
                 handleSearchFilter={(value) => updateFilters('name', value)}

@@ -1,15 +1,18 @@
 import { productColumns } from "@/columns/product";
 import { AddButton } from "@/components/add-button";
-import { Icon } from "@/components/icon";
+import { Paginator } from "@/components/paginator";
 import { ProductFilters } from "@/components/products/filter";
+import { MobileFilter } from "@/components/products/filter/mobile-filter";
+import { FilterWrapper } from "@/components/products/filter/styles";
+import { ProductsMobileList } from "@/components/products/mobile-list";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
+import { cn } from "@/lib/utils";
 import { ProductsResponse } from "@/types/responses/products";
-import { Head, Link } from "@inertiajs/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Head } from "@inertiajs/react";
 
 interface ProductsProps {
     products: ProductsResponse
@@ -24,8 +27,8 @@ export default function Products({ products }: ProductsProps) {
     return (
         <AppLayout>
             <Head title="Produtos" />
-            <ContentLayout>
-                <div className="grid grid-cols-2">
+            <ContentLayout className="pb-20 lg:pb-4">
+                <div className="hidden lg:grid grid-cols-2">
                     <div className="mr-auto">
                         {canCreateProducts && (
                             <AddButton routeName="products.create">
@@ -34,34 +37,40 @@ export default function Products({ products }: ProductsProps) {
                         )}
                     </div>
 
-                    <div className="ml-auto flex gap-2 items-center">
-                        <Button size="icon" variant="secondary" disabled={!products.prev_page_url}>
-                            <Link href={products.prev_page_url!} className="size-full flex items-center justify-center">
-                                <Icon iconNode={ChevronLeft} />
-                            </Link>
-                        </Button>
-
-                        <Button variant="ghost" size="icon" className="pointer-events-none">
-                            {products.current_page}
-                        </Button>
-
-                        <Button size="icon" variant="secondary" disabled={products.next_page_url === null}>
-                            <Link href={products.next_page_url!} className="size-full flex items-center justify-center">
-                                <Icon iconNode={ChevronRight} />
-                            </Link>
-                        </Button>
-                    </div>
+                    <Paginator pagination={products} />
                 </div>
-                <div className="grid grid-cols-10 gap-2">
-                    <div className="col-span-2">
-                        <ProductFilters />
-                    </div>
+                <FilterWrapper>
+                    <ProductFilters />
 
-                    <div className="col-span-8">
+                    <div className="min-w-0">
                         <DataTable
                             columns={productColumns}
                             data={products.data}
                         />
+                    </div>
+                </FilterWrapper>
+
+                <div className="grid lg:hidden">
+                    <ProductsMobileList products={products.data} />
+                </div>
+
+                <div className="h-16 lg:hidden bg-background border-t border-border fixed bottom-0 inset-x-0 px-4">
+                    <div className="flex items-center justify-between relative w-full h-full">
+                        <MobileFilter />
+
+                        <Paginator
+                            className={cn(
+                                canCreateProducts && 'absolute left-1/2 -translate-x-1/2',
+                                !canCreateProducts && "relative ml-auto",
+                            )}
+                            pagination={products}
+                        />
+
+                        {canCreateProducts && (
+                            <AddButton routeName="products.create">
+                                Adicionar Produto
+                            </AddButton>
+                        )}
                     </div>
                 </div>
             </ContentLayout>
