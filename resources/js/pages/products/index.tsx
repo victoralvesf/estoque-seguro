@@ -1,6 +1,8 @@
+import { productColumns } from "@/columns/product";
 import { AddButton } from "@/components/add-button";
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
@@ -50,14 +52,10 @@ export default function Products({ products }: ProductsProps) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    {products.data.map((product) => (
-                        <div key={product.id} className="p-4 border border-border rounded-md">
-                            <h3>{product.name}</h3>
-                            <p>{product.category.name}</p>
-                            <p>{product.price}</p>
-                            <p>{product.quantity}</p>
-                        </div>
-                    ))}
+                    <DataTable
+                        columns={productColumns}
+                        data={products.data}
+                    />
                 </div>
             </ContentLayout>
         </AppLayout>
