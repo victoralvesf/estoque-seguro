@@ -6,16 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
+import { Role } from "@/types";
 import { UserForm } from "@/types/responses/users";
+import { ROLES } from "@/utils/role";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { LoaderCircle } from "lucide-react";
 import { FormEventHandler } from "react";
-
-const ROLES = [
-    { label: 'Comum', value: 'user' },
-    { label: 'Operador', value: 'operator' },
-    { label: 'Administrador', value: 'admin' },
-]
 
 export default function CreateUser() {
     const { data, setData, processing, errors, post, reset } = useForm<Required<UserForm>>({
@@ -85,7 +81,7 @@ export default function CreateUser() {
                                         <SimpleDropdownMenu
                                             value={data.role}
                                             options={ROLES}
-                                            onSelected={(role) => setData('role', role)}
+                                            onSelected={(role) => setData('role', role as Role)}
                                         />
                                         <InputError message={errors.role} />
                                     </div>
