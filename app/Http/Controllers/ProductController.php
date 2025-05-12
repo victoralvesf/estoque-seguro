@@ -21,9 +21,11 @@ class ProductController extends Controller
         $allowedSearchParams = $productFilter->getAllowedSearchParams();
 
         $products = $productFilter->filter()->paginate()->getResults();
+        $categories = Category::orderBy('name')->select('id', 'name', 'slug')->get();
 
         return Inertia::render('products/index', [
             'products' => $products,
+            'categories' => $categories,
             'filters' => $request->only($allowedSearchParams),
         ]);
     }
@@ -33,8 +35,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $categories = Category::orderBy('name')->select('id', 'name', 'slug')->get();
+
         return Inertia::render('products/create', [
-            'categories' => Category::orderBy('name')->select('id', 'name', 'slug')->get(),
+            'categories' => $categories,
         ]);
     }
 
