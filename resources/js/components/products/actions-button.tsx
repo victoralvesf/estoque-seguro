@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, PencilIcon, Trash2Icon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -35,10 +35,16 @@ export function ProductTableActions() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {(userIsAdmin || userIsOperator) && (
-                        <DropdownMenuItem>Editar</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <PencilIcon className="size-4 mr-2" />
+                            Editar
+                        </DropdownMenuItem>
                     )}
                     {userIsAdmin && (
-                        <DropdownMenuItem>Excluir</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Trash2Icon className="size-4 mr-2 fill-red-400 text-red-700" />
+                            <span className="text-red-700">Excluir</span>
+                        </DropdownMenuItem>
                     )}
                 </DropdownMenuContent>
             </DropdownMenu>
