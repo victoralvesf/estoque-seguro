@@ -6,6 +6,8 @@ import {
     DropdownMenuPortal,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { Role } from "@/types";
+import { getRoleLabel } from "@/utils/role";
 import { useLayoutEffect, useRef, useState } from "react";
 
 type Option<T> = {
@@ -51,9 +53,7 @@ export function SimpleDropdownMenu<T extends string>({
     function genTriggerLabel() {
         if (label) return label
 
-        const activeOption = options.find((option) => option.value === value) as Option<T>
-
-        return activeOption.label
+        return getRoleLabel(value as Role)
     }
 
     const triggerLabel = genTriggerLabel()
