@@ -22,3 +22,9 @@ export const FilterCardTitle = styled.p`
     font-weight: 600;
     font-size: 0.875rem;
 `
+
+export const PriceLabel = styled.span`
+    color: var(--foreground);
+    font-weight: 300;
+    font-size: 0.75rem;
+`

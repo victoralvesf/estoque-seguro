@@ -49,6 +49,11 @@ export interface ProductFilters {
   per_page?: string
 }
 
+interface PriceRange {
+    min: number
+    max: number
+}
+
 export interface SharedData {
     name: string;
     auth: Auth;
@@ -56,6 +61,7 @@ export interface SharedData {
     sidebarOpen: boolean;
     categories: SharedCategory[]
     filters: ProductFilters
+    priceRange: PriceRange;
     [key: string]: unknown;
 }
 

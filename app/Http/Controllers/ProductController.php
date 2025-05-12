@@ -23,10 +23,17 @@ class ProductController extends Controller
         $products = $productFilter->filter()->paginate()->getResults();
         $categories = Category::orderBy('name')->select('id', 'name', 'slug')->get();
 
+        $minPrice = Product::min('price');
+        $maxPrice = Product::max('price');
+
         return Inertia::render('products/index', [
             'products' => $products,
             'categories' => $categories,
             'filters' => $request->only($allowedSearchParams),
+            'priceRange' => [
+                'min' => $minPrice,
+                'max' => $maxPrice,
+            ],
         ]);
     }
 
