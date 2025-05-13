@@ -5,22 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $users = $this->userService->getUsers();
+
         return Inertia::render('users/index', [
-            'users' => User::orderBy('name')
-                ->select('id', 'name', 'email', 'role')
-                ->paginate(20)
-                ->withQueryString(),
+            'users' => $users,
         ]);
     }
 
@@ -37,14 +43,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $validated = $request->validated();
-
-        User::create([
-            'name' => $validated->name,
-            'email' => $validated->email,
-            'role' => $validated->role,
-            'password' => Hash::make($validated->password),
-        ]);
+        $this->userService->createUser($request->validated());
 
         return Redirect::route('users')->with('success', 'Usuário criado com sucesso!');
     }
@@ -62,7 +61,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return Inertia::render('users/edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -70,7 +71,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $this->userService->updateUser($request->validated(), $user);
+
+        return Redirect::route('users')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     /**

@@ -41,7 +41,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->can('create', User::class);
 
     Route::post('users', [UserController::class, 'store'])
+        ->name('users.store')
         ->can('create', User::class);
+
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])
+        ->name('users.edit')
+        ->can('update', 'user');
+
+    Route::put('users/{user}', [UserController::class, 'update'])
+        ->name('users.update')
+        ->can('update', 'user');
 });
 
 require __DIR__ . '/settings.php';
