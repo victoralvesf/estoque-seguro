@@ -48,7 +48,7 @@ export default function Users({ users }: UsersProps) {
 
                         {canCreateUser && (
                             <AddButton routeName="users.create">
-                                Criar Usuário
+                                <PlusIcon className="size-4" />
                             </AddButton>
                         )}
                     </div>

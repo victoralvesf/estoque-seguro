@@ -57,7 +57,7 @@ export default function Products({ products }: ProductsProps) {
 
                         {canCreateProducts && (
                             <AddButton routeName="products.create">
-                                Adicionar Produto
+                                <PlusIcon className="size-4" />
                             </AddButton>
                         )}
                     </div>
