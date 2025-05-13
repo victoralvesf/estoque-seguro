@@ -1,4 +1,4 @@
-import { MoreHorizontal, PencilIcon, Trash2Icon } from "lucide-react"
+import { MoreHorizontal, PencilIcon } from "lucide-react"
 import { router } from "@inertiajs/react"
 import { Button } from "@/components/ui/button"
 import {
@@ -38,10 +38,6 @@ export function UserTableActions({ user }: UserTableActionsProps) {
                     <DropdownMenuItem onClick={handleEdit}>
                         <PencilIcon className="size-4 mr-2" />
                         Editar
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Trash2Icon className="size-4 mr-2 fill-red-400 text-red-700" />
-                        <span className="text-red-700">Excluir</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
