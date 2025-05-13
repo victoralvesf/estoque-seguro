@@ -97,7 +97,7 @@ export default function CreateUser() {
                                             type="password"
                                             required
                                             tabIndex={1}
-                                            placeholder="*********"
+                                            placeholder="Senha"
                                             autoComplete="new-password"
                                             disabled={processing}
                                             value={data.password}
@@ -117,7 +117,7 @@ export default function CreateUser() {
                                             tabIndex={1}
                                             autoComplete="new-password"
                                             disabled={processing}
-                                            placeholder="*********"
+                                            placeholder="Confirme a senha"
                                             value={data.password_confirmation}
                                             onChange={(e) => setData('password_confirmation', e.target.value)}
                                         />
