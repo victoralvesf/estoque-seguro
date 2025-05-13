@@ -34,7 +34,7 @@ export function ProductsMobileList({ products }: ProductsMobileListProps) {
                     <div className="flex items-end justify-between">
                         <Badge variant="secondary">{product.category.name}</Badge>
 
-                        <ProductTableActions />
+                        <ProductTableActions product={product} />
                     </div>
                 </div>
             ))}

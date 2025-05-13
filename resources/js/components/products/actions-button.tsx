@@ -8,10 +8,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { usePage } from "@inertiajs/react"
+import { router, usePage } from "@inertiajs/react"
 import { SharedData } from "@/types"
+import { ProductResponse } from "@/types/responses/products"
 
-export function ProductTableActions() {
+interface ProductTableActionsProps {
+    product: ProductResponse
+}
+
+export function ProductTableActions({ product }: ProductTableActionsProps) {
     const { auth } = usePage<SharedData>().props
 
     const userIsCommom = auth.user.role === 'user'
@@ -19,6 +24,11 @@ export function ProductTableActions() {
 
     const userIsAdmin = auth.user.role === 'admin'
     const userIsOperator = auth.user.role === 'operator'
+
+    function handleEdit() {
+        const url = route('products.edit', { product: product.id })
+        router.visit(url)
+    }
 
     return (
         <div className="flex justify-end">
@@ -35,7 +45,7 @@ export function ProductTableActions() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {(userIsAdmin || userIsOperator) && (
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleEdit}>
                             <PencilIcon className="size-4 mr-2" />
                             Editar
                         </DropdownMenuItem>

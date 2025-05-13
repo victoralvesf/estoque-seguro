@@ -2,45 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\ProductFilter;
 use App\Http\Requests\Product\StoreProductRequest;
-use App\Models\Category;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
+use App\Services\CategoryService;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    protected $categoryService;
+    protected $productService;
+
+    public function __construct(CategoryService $categoryService, ProductService $productService)
+    {
+        $this->categoryService = $categoryService;
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $productFilter = new ProductFilter($request);
-        $allowedSearchParams = $productFilter->getAllowedSearchParams();
-
-        $products = $productFilter->filter()->paginate()->getResults();
-        $categories = Category::orderBy('name')->select('id', 'name', 'slug')->get();
-
-        $minPrice = Product::min('price');
-        $maxPrice = Product::max('price');
-
-        $minQuantity = Product::min('quantity');
-        $maxQuantity = Product::max('quantity');
+        $products = $this->productService->getProducts($request);
+        $categories = $this->categoryService->getCategories();
+        $allowedSearchParams = $this->productService->getAllowedSearchParams($request);
 
         return Inertia::render('products/index', [
             'products' => $products,
             'categories' => $categories,
             'filters' => $request->only($allowedSearchParams),
-            'priceRange' => [
-                'min' => $minPrice,
-                'max' => $maxPrice,
-            ],
-            'quantityRange' => [
-                'min' => $minQuantity,
-                'max' => $maxQuantity,
-            ],
+            'priceRange' => $this->productService->getPriceRange(),
+            'quantityRange' => $this->productService->getQuantityRange(),
         ]);
     }
 
@@ -49,7 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('name')->select('id', 'name', 'slug')->get();
+        $categories = $this->categoryService->getCategories();
 
         return Inertia::render('products/create', [
             'categories' => $categories,
@@ -61,20 +57,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $validated = $request->validated();
-
-        $categoryName = $validated['category'];
-        $categorySlug = str($categoryName)->slug();
-
-        $category = Category::firstOrCreate(
-            ['name' => $categoryName],
-            ['slug' => $categorySlug]
-        );
-
-        $validated['category_id'] = $category->id;
-        unset($validated['category']);
-
-        Product::create($validated);
+        $this->productService->createProduct($request->validated());
 
         return Redirect::route('products')->with('success', 'Produto criado com sucesso!');
     }
@@ -92,15 +75,22 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = $this->categoryService->getCategories();
+
+        return Inertia::render('products/edit', [
+            'categories' => $categories,
+            'product' => $product,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $this->productService->updateProduct($request->validated(), $product);
+
+        return Redirect::route('products')->with('success', 'Produto atualizado com sucesso!');
     }
 
     /**

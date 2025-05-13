@@ -20,7 +20,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->can('create', Product::class);
 
     Route::post('products', [ProductController::class, 'store'])
+        ->name('products.store')
         ->can('create', Product::class);
+
+    Route::get('products/{product}/edit', [ProductController::class, 'edit'])
+        ->name('products.edit')
+        ->can('update', 'product');
+
+    Route::put('products/{product}', [ProductController::class, 'update'])
+        ->name('products.update')
+        ->can('update', 'product');
 
     // Users
     Route::get('users', [UserController::class, 'index'])

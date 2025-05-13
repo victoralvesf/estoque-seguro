@@ -1,24 +1,25 @@
 import AppLayout from "@/layouts/app-layout";
-import { ProductForm as ProductFormType } from "@/types/responses/products";
+import { ProductForm as ProductFormType, ProductResponse } from "@/types/responses/products";
 import { Head, router, useForm } from "@inertiajs/react";
 import { FormEventHandler, useState } from "react";
 import { ContentLayout } from "@/layouts/content-layout";
 import { FormTitle } from "@/components/form-title";
 import { ProductForm } from "@/components/products/form";
-import { unmaskPrice } from "@/utils/price";
+import { formatPrice, unmaskPrice } from "@/utils/price";
 
-export default function CreateProduct() {
-    const title = 'Adicionar Produto'
+interface EditProductProps {
+    product: ProductResponse
+}
+
+export default function EditProduct({ product }: EditProductProps) {
+    const title = 'Alterar Produto'
 
     const [processing, setProcessing] = useState(false)
+    const formattedPrice = formatPrice(product.price, true)
     const form = useForm<Required<ProductFormType>>({
-        name: '',
-        description: '',
-        category: '',
-        quantity: 1,
-        price: '',
-        currency_code: 'BRL',
-        sku: ''
+        ...product,
+        category: product.category.name,
+        price: formattedPrice,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -29,7 +30,9 @@ export default function CreateProduct() {
             price: unmaskPrice(form.data.price),
         };
 
-        router.post(route('products'), payload, {
+        const url = route('products.update', { product: product.id })
+
+        router.put(url, payload, {
             onStart: () => setProcessing(true),
             onFinish: () => setProcessing(false),
         })
@@ -46,7 +49,7 @@ export default function CreateProduct() {
                     form={form}
                     processing={processing}
                     submit={submit}
-                    buttonText="Cadastrar"
+                    buttonText="Salvar"
                 />
             </ContentLayout>
         </AppLayout>

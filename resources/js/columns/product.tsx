@@ -41,6 +41,6 @@ export const productColumns: ColumnDef<ProductResponse>[] = [
     {
         id: 'actions',
         header: '',
-        cell: ({ row }) => <ProductTableActions />,
+        cell: ({ row }) => <ProductTableActions product={row.original} />,
     }
 ]
