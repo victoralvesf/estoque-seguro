@@ -15,7 +15,9 @@ export function MobileFilter() {
     return (
         <Drawer>
             <DrawerTrigger asChild>
-                <Button variant="secondary">Filtros</Button>
+                <div className="rounded-sm px-3 py-1 h-9 bg-secondary hover:bg-secondary/90 flex items-center justify-center">
+                    Filtros
+                </div>
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader>
