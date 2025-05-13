@@ -1,6 +1,4 @@
-import { ProductResponse } from "@/types/responses/products"
 import { Badge } from "../ui/badge"
-import { formatPrice } from "@/utils/price"
 import { UserTableActions } from "./actions-button"
 import { UserResponse } from "@/types/responses/users"
 

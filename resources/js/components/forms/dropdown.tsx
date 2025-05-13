@@ -3,7 +3,6 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuPortal,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Role } from "@/types";
@@ -35,7 +34,6 @@ export function SimpleDropdownMenu<T extends string>({
         if (!triggerRef.current) return
 
         const element = triggerRef.current
-        const controller = new AbortController()
 
         const resizeObserver = new ResizeObserver(() => {
             setTriggerWidth(element.offsetWidth)

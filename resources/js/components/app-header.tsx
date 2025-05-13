@@ -11,7 +11,7 @@ import { usePermissions } from '@/hooks/use-permissions';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { ListIcon, Menu, Search, UsersIcon } from 'lucide-react';
+import { ListIcon, Menu, UsersIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -40,13 +40,14 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
 
+    const canViewUsers = usePermissions({
+        model: 'user',
+        action: 'viewAny'
+    })
+
     const navItems = mainNavItems.filter((item) => {
-        if (item.id === 'users') {
-            return usePermissions({
-                model: 'user',
-                action: 'viewAny'
-            })
-        }
+        if (item.id === 'users') return canViewUsers
+
         return true
     })
 

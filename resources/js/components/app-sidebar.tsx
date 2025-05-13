@@ -1,21 +1,39 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { ListIcon, UsersIcon } from 'lucide-react';
 import AppLogo from './app-logo';
+import { usePermissions } from '@/hooks/use-permissions';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
+        id: 'products',
+        title: 'Produtos',
+        href: '/products',
+        icon: ListIcon,
     },
+    {
+        id: 'users',
+        title: 'Usuários',
+        href: '/users',
+        icon: UsersIcon,
+    }
 ];
 
 export function AppSidebar() {
+    const canViewUsers = usePermissions({
+        model: 'user',
+        action: 'viewAny'
+    })
+
+    const navItems = mainNavItems.filter((item) => {
+        if (item.id === 'users') return canViewUsers
+
+        return true
+    })
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -31,7 +49,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={navItems} />
             </SidebarContent>
 
             <SidebarFooter>

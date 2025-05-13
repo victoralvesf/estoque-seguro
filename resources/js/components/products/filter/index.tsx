@@ -15,7 +15,7 @@ export function ProductFilters() {
 
     const applyFilter = useCallback(() => {
         const url = route('products')
-        const payload = localFilters as {}
+        const payload = { ...localFilters }
 
         router.get(url, payload, {
             preserveState: true,
@@ -25,7 +25,9 @@ export function ProductFilters() {
     const updateFilters = useCallback((filter: keyof ProductFiltersType, value: string) => {
         setLocalFilters(prev => {
             if (value === '') {
-                const { [filter]: _, ...rest } = prev
+                const rest = Object.fromEntries(
+                    Object.entries(prev).filter(([key]) => key !== filter)
+                )
                 return rest
             }
 
@@ -37,7 +39,9 @@ export function ProductFilters() {
     }, [setLocalFilters])
 
     useEffect(() => {
-        if (localFilters === filters) return
+        if (JSON.stringify(localFilters) === JSON.stringify(filters)) {
+            return
+        }
 
         applyFilter()
     }, [localFilters])

@@ -1,4 +1,4 @@
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { Button } from "./ui/button";
 import { Icon } from "./icon";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -7,7 +7,7 @@ import { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
 
 type PaginatorProps = ComponentPropsWithoutRef<'div'> & {
-    pagination: PaginatedResponse<any>
+    pagination: PaginatedResponse<unknown>
 }
 
 export function Paginator({ pagination, className }: PaginatorProps) {

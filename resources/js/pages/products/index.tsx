@@ -5,7 +5,6 @@ import { ProductFilters } from "@/components/products/filter";
 import { MobileFilter } from "@/components/products/filter/mobile-filter";
 import { FilterWrapper } from "@/components/products/filter/styles";
 import { ProductsMobileList } from "@/components/products/mobile-list";
-import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { SimpleTooltip } from "@/components/ui/simple-tooltip";
 import { usePermissions } from "@/hooks/use-permissions";
