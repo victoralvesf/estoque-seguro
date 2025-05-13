@@ -1,4 +1,5 @@
 import { MoreHorizontal, PencilIcon, Trash2Icon } from "lucide-react"
+import { router } from "@inertiajs/react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -8,8 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { UserResponse } from "@/types/responses/users"
 
-export function UserTableActions() {
+interface UserTableActionsProps {
+    user: UserResponse
+}
+
+export function UserTableActions({ user }: UserTableActionsProps) {
+    function handleEdit() {
+        const url = route('users.edit', { user: user.id })
+        router.visit(url)
+    }
+
     return (
         <div className="flex justify-end">
             <DropdownMenu>
@@ -24,7 +35,7 @@ export function UserTableActions() {
                         Ações
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleEdit}>
                         <PencilIcon className="size-4 mr-2" />
                         Editar
                     </DropdownMenuItem>

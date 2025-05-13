@@ -4,14 +4,18 @@ import { FormTitle } from "@/components/form-title";
 import { UserForm } from "@/components/users/form";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
-import { UserForm as UserFormType } from "@/types/responses/users";
+import { UserForm as UserFormType, UserResponse } from "@/types/responses/users";
 
-export default function CreateUser() {
-    const title = 'Criar Usuário'
+interface EditUserProps {
+    user: UserResponse
+}
+
+export default function EditUser({ user }: EditUserProps) {
+    const title = 'Editar Usuário'
     const form = useForm<Required<UserFormType>>({
-        name: '',
-        email: '',
-        role: 'user',
+        name: user.name,
+        email: user.email,
+        role: user.role,
         password: '',
         password_confirmation: '',
     });
@@ -19,7 +23,9 @@ export default function CreateUser() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault()
 
-        form.post(route('users'), {
+        const url = route('users.update', { user: user.id })
+
+        form.put(url, {
             onFinish: () => form.reset('password', 'password_confirmation')
         })
     }
@@ -33,7 +39,8 @@ export default function CreateUser() {
                 <UserForm
                     submit={submit}
                     form={form}
-                    buttonText="Cadastrar"
+                    buttonText="Salvar"
+                    edit
                 />
             </ContentLayout>
         </AppLayout>

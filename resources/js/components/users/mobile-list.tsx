@@ -21,9 +21,7 @@ export function UsersMobileList({ users }: UsersMobileListProps) {
 
                     <div className="flex flex-col gap-2 items-end justify-between">
                         <Badge variant="secondary">{user.role}</Badge>
-                        <UserTableActions
-                            // user={user}
-                        />
+                        <UserTableActions user={user} />
                     </div>
                 </div>
             ))}

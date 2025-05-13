@@ -24,7 +24,7 @@ export default function Users({ users }: UsersProps) {
 
     return (
         <AppLayout>
-            <Head title="Produtos" />
+            <Head title="Usuários" />
             <ContentLayout>
                 <div className="hidden lg:grid">
                     <Paginator pagination={users} />

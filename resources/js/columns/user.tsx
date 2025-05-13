@@ -26,6 +26,6 @@ export const userColumns: ColumnDef<UserResponse>[] = [
     {
         id: 'actions',
         header: '',
-        cell: ({ row }) => <UserTableActions />,
+        cell: ({ row }) => <UserTableActions user={row.original} />,
     }
 ]

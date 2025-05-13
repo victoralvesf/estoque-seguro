@@ -29,6 +29,19 @@ class UserService
 
     public function updateUser(array $validated, User $user)
     {
-        $user->update($validated);
+        if (empty($validated['password'])) {
+            unset($validated['password']);
+
+            $user->update($validated);
+
+            return;
+        }
+
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role' => $validated['role'],
+            'password' => Hash::make($validated['password']),
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\User;
 
-use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
@@ -32,10 +32,18 @@ class UpdateUserRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(Product::class)->ignore($this->user->id),
+                Rule::unique(User::class)->ignore($this->user->id),
             ],
             'role' => ['required', 'string', 'in:user,operator,admin'],
-            'password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if (empty($this->password)) {
+            $this->request->remove('password');
+            $this->request->remove('password_confirmation');
+        }
     }
 }
