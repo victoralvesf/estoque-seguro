@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { Button } from "./ui/button";
 import { Icon } from "./icon";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -11,22 +11,40 @@ type PaginatorProps = ComponentPropsWithoutRef<'div'> & {
 }
 
 export function Paginator({ pagination, className }: PaginatorProps) {
+    function handlePrevPage() {
+        if (!pagination.prev_page_url) return
+
+        router.get(pagination.prev_page_url)
+    }
+
+    function handleNextPage() {
+        if (!pagination.next_page_url) return
+
+        router.get(pagination.next_page_url)
+    }
+
     return (
         <div className={cn("ml-auto flex gap-2 items-center", className)}>
-            <Button size="icon" variant="secondary" disabled={!pagination.prev_page_url}>
-                <Link href={pagination.prev_page_url!} className="size-full flex items-center justify-center">
-                    <Icon iconNode={ChevronLeft} />
-                </Link>
+            <Button
+                size="icon"
+                variant="secondary"
+                disabled={!pagination.prev_page_url}
+                onClick={handlePrevPage}
+            >
+                <Icon iconNode={ChevronLeft} />
             </Button>
 
             <Button variant="ghost" size="icon" className="pointer-events-none">
                 {pagination.current_page}
             </Button>
 
-            <Button size="icon" variant="secondary" disabled={pagination.next_page_url === null}>
-                <Link href={pagination.next_page_url!} className="size-full flex items-center justify-center">
-                    <Icon iconNode={ChevronRight} />
-                </Link>
+            <Button
+                size="icon"
+                variant="secondary"
+                disabled={pagination.next_page_url === null}
+                onClick={handleNextPage}
+            >
+                <Icon iconNode={ChevronRight} />
             </Button>
         </div>
     )
