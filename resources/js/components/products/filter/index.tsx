@@ -37,6 +37,8 @@ export function ProductFilters() {
     }, [setLocalFilters])
 
     useEffect(() => {
+        if (localFilters === filters) return
+
         applyFilter()
     }, [localFilters])
 
