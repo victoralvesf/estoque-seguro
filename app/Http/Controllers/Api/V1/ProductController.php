@@ -3,21 +3,29 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Http\Requests\Api\V1\ProductIndexRequest;
+use App\Services\Api\V1\ProductService;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    protected $productService;
+
+    public function __construct(ProductService $productService)
     {
-        $perPage = $request->input('per_page', 10);
-        $products = Product::simplePaginate($perPage);
+        $this->productService = $productService;
+    }
+
+    public function index(ProductIndexRequest $request)
+    {
+        $products = $this->productService->getPaginatedProducts($request);
 
         return response()->json($products);
     }
 
-    public function show(Request $request, Product $product)
+    public function show(int $id)
     {
+        $product = $this->productService->getProductById($id);
+
         return response()->json($product);
     }
 }

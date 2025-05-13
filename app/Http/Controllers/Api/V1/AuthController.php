@@ -7,8 +7,6 @@ use App\Http\Requests\Api\V1\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Api\V1\AuthService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {

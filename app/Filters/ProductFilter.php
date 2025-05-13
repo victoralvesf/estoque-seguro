@@ -146,6 +146,16 @@ class ProductFilter
     }
 
     /**
+     * Apply simple pagination to the results
+     */
+    public function simplePaginate()
+    {
+        $this->results = $this->query->simplePaginate($this->perPage);
+
+        return $this;
+    }
+
+    /**
      * Return the query builder instance for further chaining
      */
     public function getQuery(): Builder
