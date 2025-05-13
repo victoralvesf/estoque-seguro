@@ -7,12 +7,14 @@ import { FilterWrapper } from "@/components/products/filter/styles";
 import { ProductsMobileList } from "@/components/products/mobile-list";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
+import { SimpleTooltip } from "@/components/ui/simple-tooltip";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
 import { cn } from "@/lib/utils";
 import { ProductsResponse } from "@/types/responses/products";
 import { Head } from "@inertiajs/react";
+import { PlusIcon } from "lucide-react";
 
 interface ProductsProps {
     products: ProductsResponse
@@ -28,15 +30,7 @@ export default function Products({ products }: ProductsProps) {
         <AppLayout>
             <Head title="Produtos" />
             <ContentLayout className="pb-20 lg:pb-4">
-                <div className="hidden lg:grid grid-cols-2">
-                    <div className="mr-auto">
-                        {canCreateProducts && (
-                            <AddButton routeName="products.create">
-                                Adicionar Produto
-                            </AddButton>
-                        )}
-                    </div>
-
+                <div className="hidden lg:grid">
                     <Paginator pagination={products} />
                 </div>
                 <FilterWrapper>
@@ -73,6 +67,14 @@ export default function Products({ products }: ProductsProps) {
                         )}
                     </div>
                 </div>
+
+                {canCreateProducts && (
+                    <SimpleTooltip text="Adicionar Produto">
+                        <AddButton routeName="products.create" rounded>
+                            <PlusIcon className="size-6" />
+                        </AddButton>
+                    </SimpleTooltip>
+                )}
             </ContentLayout>
         </AppLayout>
     )
