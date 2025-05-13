@@ -2,7 +2,6 @@ import { userColumns } from "@/columns/user";
 import { AddButton } from "@/components/add-button";
 import { Paginator } from "@/components/paginator";
 import { DataTable } from "@/components/ui/data-table";
-import { SimpleTooltip } from "@/components/ui/simple-tooltip";
 import { UsersMobileList } from "@/components/users/mobile-list";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
@@ -25,10 +24,7 @@ export default function Users({ users }: UsersProps) {
     return (
         <AppLayout>
             <Head title="Usuários" />
-            <ContentLayout>
-                <div className="hidden lg:grid">
-                    <Paginator pagination={users} />
-                </div>
+            <ContentLayout className="pb-20 lg:pb-24">
                 <div className="hidden lg:flex flex-col gap-2">
                     <DataTable
                         columns={userColumns}
@@ -58,13 +54,18 @@ export default function Users({ users }: UsersProps) {
                     </div>
                 </div>
 
-                {canCreateUser && (
-                    <SimpleTooltip text="Criar Usuário">
-                        <AddButton routeName="users.create" rounded>
-                            <PlusIcon className="size-6" />
-                        </AddButton>
-                    </SimpleTooltip>
-                )}
+                <div className="hidden lg:grid fixed bottom-0 inset-x-0 h-20 w-full border-t border-border bg-background z-50">
+                    <div className="mx-auto w-full max-w-7xl h-full flex items-center gap-4 justify-end px-4">
+                        <Paginator pagination={users} />
+
+                        {canCreateUser && (
+                            <AddButton routeName="users.create">
+                                <PlusIcon className="size-6" />
+                                Criar Usuário
+                            </AddButton>
+                        )}
+                    </div>
+                </div>
             </ContentLayout>
         </AppLayout>
     )

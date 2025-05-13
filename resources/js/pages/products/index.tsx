@@ -6,7 +6,6 @@ import { MobileFilter } from "@/components/products/filter/mobile-filter";
 import { FilterWrapper } from "@/components/products/filter/styles";
 import { ProductsMobileList } from "@/components/products/mobile-list";
 import { DataTable } from "@/components/ui/data-table";
-import { SimpleTooltip } from "@/components/ui/simple-tooltip";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
@@ -28,10 +27,7 @@ export default function Products({ products }: ProductsProps) {
     return (
         <AppLayout>
             <Head title="Produtos" />
-            <ContentLayout className="pb-20 lg:pb-4">
-                <div className="hidden lg:grid">
-                    <Paginator pagination={products} />
-                </div>
+            <ContentLayout className="pb-20 lg:pb-24">
                 <FilterWrapper>
                     <ProductFilters />
 
@@ -67,13 +63,18 @@ export default function Products({ products }: ProductsProps) {
                     </div>
                 </div>
 
-                {canCreateProducts && (
-                    <SimpleTooltip text="Adicionar Produto">
-                        <AddButton routeName="products.create" rounded>
-                            <PlusIcon className="size-6" />
-                        </AddButton>
-                    </SimpleTooltip>
-                )}
+                <div className="hidden lg:grid fixed bottom-0 inset-x-0 h-20 w-full border-t border-border bg-background z-50">
+                    <div className="mx-auto w-full max-w-7xl h-full flex items-center gap-4 justify-end px-4">
+                        <Paginator pagination={products} />
+
+                        {canCreateProducts && (
+                            <AddButton routeName="products.create">
+                                <PlusIcon className="size-6" />
+                                Adicionar Produto
+                            </AddButton>
+                        )}
+                    </div>
+                </div>
             </ContentLayout>
         </AppLayout>
     )
