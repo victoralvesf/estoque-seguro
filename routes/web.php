@@ -31,6 +31,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('products.update')
         ->can('update', 'product');
 
+    Route::delete('products/{product}', [ProductController::class, 'destroy'])
+        ->name('products.destroy')
+        ->can('delete', 'product');
+
     // Users
     Route::get('users', [UserController::class, 'index'])
         ->name('users')

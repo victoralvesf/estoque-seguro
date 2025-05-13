@@ -31,6 +31,11 @@ class ProductService
         $product->update($productWithCategory);
     }
 
+    public function deleteProduct(Product $product)
+    {
+        $product->delete();
+    }
+
     public function handleCategory(array $validated)
     {
         $categoryName = $validated['category'];
