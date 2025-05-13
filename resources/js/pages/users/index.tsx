@@ -1,14 +1,16 @@
 import { userColumns } from "@/columns/user";
 import { AddButton } from "@/components/add-button";
-import { Icon } from "@/components/icon";
-import { Button } from "@/components/ui/button";
+import { Paginator } from "@/components/paginator";
 import { DataTable } from "@/components/ui/data-table";
+import { SimpleTooltip } from "@/components/ui/simple-tooltip";
+import { UsersMobileList } from "@/components/users/mobile-list";
 import { usePermissions } from "@/hooks/use-permissions";
 import AppLayout from "@/layouts/app-layout";
 import { ContentLayout } from "@/layouts/content-layout";
+import { cn } from "@/lib/utils";
 import { UsersResponse } from "@/types/responses/users";
-import { Head, Link } from "@inertiajs/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Head } from "@inertiajs/react";
+import { PlusIcon } from "lucide-react";
 
 interface UsersProps {
     users: UsersResponse
@@ -24,42 +26,45 @@ export default function Users({ users }: UsersProps) {
         <AppLayout>
             <Head title="Produtos" />
             <ContentLayout>
-                <div className="grid grid-cols-2">
-                    <div className="mr-auto">
+                <div className="hidden lg:grid">
+                    <Paginator pagination={users} />
+                </div>
+                <div className="hidden lg:flex flex-col gap-2">
+                    <DataTable
+                        columns={userColumns}
+                        data={users.data}
+                    />
+                </div>
+
+                <div className="grid lg:hidden">
+                    <UsersMobileList users={users.data} />
+                </div>
+
+                <div className="h-16 lg:hidden bg-background border-t border-border fixed bottom-0 inset-x-0 px-4">
+                    <div className="flex items-center justify-end relative w-full h-full">
+                        <Paginator
+                            className={cn(
+                                canCreateUser && 'absolute left-1/2 -translate-x-1/2',
+                                !canCreateUser && "relative ml-auto",
+                            )}
+                            pagination={users}
+                        />
+
                         {canCreateUser && (
                             <AddButton routeName="users.create">
                                 Criar Usuário
                             </AddButton>
                         )}
                     </div>
-
-
-                    <div className="flex items-center justify-end">
-                        <div className="flex gap-2 items-center">
-                            <Button size="icon" variant="secondary" disabled={!users.prev_page_url}>
-                                <Link href={users.prev_page_url!} className="size-full flex items-center justify-center">
-                                    <Icon iconNode={ChevronLeft} />
-                                </Link>
-                            </Button>
-
-                            <Button variant="ghost" size="icon" className="pointer-events-none">
-                                {users.current_page}
-                            </Button>
-
-                            <Button size="icon" variant="secondary" disabled={users.next_page_url === null}>
-                                <Link href={users.next_page_url!} className="size-full flex items-center justify-center">
-                                    <Icon iconNode={ChevronRight} />
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                    <DataTable
-                        columns={userColumns}
-                        data={users.data}
-                    />
-                </div>
+
+                {canCreateUser && (
+                    <SimpleTooltip text="Criar Usuário">
+                        <AddButton routeName="users.create" rounded>
+                            <PlusIcon className="size-6" />
+                        </AddButton>
+                    </SimpleTooltip>
+                )}
             </ContentLayout>
         </AppLayout>
     )

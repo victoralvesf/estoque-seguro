@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, PencilIcon, Trash2Icon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -24,8 +24,14 @@ export function UserTableActions() {
                         Ações
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Editar</DropdownMenuItem>
-                    <DropdownMenuItem>Excluir</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <PencilIcon className="size-4 mr-2" />
+                        Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Trash2Icon className="size-4 mr-2 fill-red-400 text-red-700" />
+                        <span className="text-red-700">Excluir</span>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
